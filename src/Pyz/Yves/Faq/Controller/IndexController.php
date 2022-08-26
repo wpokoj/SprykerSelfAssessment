@@ -4,22 +4,26 @@ namespace Pyz\Yves\Faq\Controller;
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Pyz\Client\Faq\FaqClientInterface;
+use Pyz\Yves\Faq\FaqFactory;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method FaqClientInterface getClient()
+ * @method FaqFactory getFactory()
  */
 class IndexController extends AbstractController {
 
     public function indexAction(Request $req): View {
 
+        $customerValidator = $this->getFactory()->createCustomerValidator();
+
+        var_dump($customerValidator->isCustomerLogged());
+        var_dump($customerValidator->getLoggedCustomerId());
+
         $limit = intval($req->query->get('items-per-page') ?? 10);
         $page  = intval($req->query->get('page') ?? 1);
-
-        var_dump($limit);
-        var_dump($page);
 
         $questions = [];
 
