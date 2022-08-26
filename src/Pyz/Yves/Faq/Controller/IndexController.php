@@ -2,6 +2,7 @@
 
 namespace Pyz\Yves\Faq\Controller;
 
+use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Pyz\Client\Faq\FaqClientInterface;
 use Pyz\Yves\Faq\FaqFactory;
@@ -28,12 +29,13 @@ class IndexController extends AbstractController {
         $questions = [];
 
         $data = $this->getClient()->getAllFaqs(
-            (new PaginationTransfer())
-                ->setLimit($limit)
-                ->setPage($page)
+            (new FaqDataCollectionTransfer())
+                ->setPagination((new PaginationTransfer())
+                    ->setLimit($limit)
+                    ->setPage($page))
         );
 
-        foreach($data->getFaqs() as $faq) {
+        foreach($data->getFaqsDate() as $faq) {
             $questions[] = $faq->toArray();
         }
 

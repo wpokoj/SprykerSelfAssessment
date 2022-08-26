@@ -3,6 +3,8 @@
 namespace Pyz\Zed\Faq\Persistence;
 
 use Generated\Shared\Transfer\FaqCollectionTransfer;
+use Generated\Shared\Transfer\FaqDataCollectionTransfer;
+use Generated\Shared\Transfer\FaqDataTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -45,21 +47,21 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         return $trans;
     }
 
-    public function getFaqCollectionPaginated(int $limit, int $page): FaqCollectionTransfer {
+    public function getFaqCollectionPaginated(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
+
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByEnabled(true)
-            ->paginate($page, $limit)
+            ->paginate(
+                $trans->getPagination()->getPage(),
+                $trans->getPagination()->getLimit())
             ->getResults();
 
-
-        $trans = new FaqCollectionTransfer();
-
         foreach ($data as $faq) {
-            $faq = (new FaqTransfer())
-                ->fromArray($faq->toArray());
+            $faq = (new FaqDataTransfer())
+                ->fromArray($faq->toArray(), true);
 
-            $trans->addFaq($faq);
+            $trans->addFaqData($faq);
         }
 
         return $trans;
