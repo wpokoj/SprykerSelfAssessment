@@ -50,6 +50,9 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
 
     public function getFaqCollectionPaginated(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
 
+        $userLogged = $trans->getFaqCustomer() !== null;
+
+
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByEnabled(true)
@@ -65,6 +68,17 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
                 ->fromArray($faq->toArray(), true);
 
             $nFaq->setVoteCount(count($faq->getPyzFaqVotes()));
+
+            if($userLogged) {
+                $uid = $trans->getFaqCustomer()->getCustomerId();
+
+                foreach ($faq->getPyzFaqVotes() as $vote) {
+                    if($vote->getIdCustomer() === $uid) {
+                        $nFaq->setUserVoted(true);
+                        break;
+                    }
+                }
+            }
 
             $trans->addFaqData($nFaq);
         }

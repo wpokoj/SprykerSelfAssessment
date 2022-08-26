@@ -2,6 +2,7 @@
 
 namespace Pyz\Yves\Faq\Controller;
 
+use Generated\Shared\Transfer\FaqCustomerTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Pyz\Client\Faq\FaqClientInterface;
@@ -28,12 +29,17 @@ class IndexController extends AbstractController {
 
         $questions = [];
 
-        $data = $this->getClient()->getAllFaqs(
-            (new FaqDataCollectionTransfer())
-                ->setPagination((new PaginationTransfer())
-                    ->setLimit($limit)
-                    ->setPage($page))
-        );
+        $req = (new FaqDataCollectionTransfer())
+            ->setPagination((new PaginationTransfer())
+                ->setLimit($limit)
+                ->setPage($page));
+
+        if($customerValidator->isCustomerLogged()) {
+            $req->setFaqCustomer((new FaqCustomerTransfer())
+                    ->setCustomerId($customerValidator->getLoggedCustomerId()));
+        }
+
+        $data = $this->getClient()->getAllFaqs($req);
 
         foreach($data->getFaqsDate() as $faq) {
             $questions[] = $faq->toArray();
@@ -42,6 +48,7 @@ class IndexController extends AbstractController {
 
         return $this->view(
             [
+                'logged' => $customerValidator->isCustomerLogged(),
                 'questions' => $questions,
                 'itemsPerPage' => $limit,
                 'page' => $page,

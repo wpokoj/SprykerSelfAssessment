@@ -5,6 +5,7 @@ namespace Pyz\Zed\Faq\Business;
 use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
+use Generated\Shared\Transfer\FaqVoteRequestTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -65,5 +66,20 @@ class FaqFacade extends AbstractFacade implements FaqFacadeInterface {
         }
 
         return $trans->fromArray($res->toArray());
+    }
+
+    public function addFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
+
+        return $this->getFactory()
+            ->createVoteAdder()
+            ->addVote($trans);
+    }
+
+    public function revokeFaqVote(FaqVoteRequestTransfer $trans): void {
+        // TODO: Implement revokeFaqVote() method.
+    }
+
+    public function findFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
+        // TODO: Implement findFaqVote() method.
     }
 }

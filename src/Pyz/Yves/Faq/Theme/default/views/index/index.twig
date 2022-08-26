@@ -1,6 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
+    logged: _view.logged,
     questions: _view.questions,
     itemsPerPage: _view.itemsPerPage,
     page: _view.page,
@@ -17,6 +18,24 @@
                 Q: {{ question.question }} <br>
                 A: {{ question.answer }} <br>
                 Votes: {{ question.vote_count }} <br>
+                {% if data.logged == true %}
+                    {% if question.user_voted == true %}
+                        User voted here :) <br>
+
+                        <form method="post" action="/faq/revoke">
+                            <input type="hidden" name="id-faq" value="{{ question.id_faq }}">
+                            <input type="submit" value="Revoke vote">
+                        </form>
+
+                    {% else %}
+
+                        <form method="post" action="/faq/vote">
+                            <input type="hidden" name="id-faq" value="{{ question.id_faq }}">
+                            <input type="submit" value="Vote">
+                        </form>
+
+                    {% endif %}
+                {% endif %}
             </div>
             <br><br>
         {% endfor %}
