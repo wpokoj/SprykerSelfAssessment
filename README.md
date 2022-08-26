@@ -31,7 +31,7 @@ Acceptance Criteria:
 [Postponed] CRUD endpoints are available for logged in users
 [Done ig] Errors are properly handled
 
-[Done] Challenge 1: Each endpoint is available only if enabled in config file, if not 404 is returned.
+[(not really) Done] Challenge 1: Each endpoint is available only if enabled in config file, if not 404 is returned.
 Challenge 2: FAQ data are localized when they’re returned.
 
 US 3
