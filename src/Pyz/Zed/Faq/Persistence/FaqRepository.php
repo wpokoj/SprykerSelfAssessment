@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
+use Generated\Shared\Transfer\PyzFaqEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -52,16 +53,20 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByEnabled(true)
+            ->leftJoinPyzFaqVote()
             ->paginate(
                 $trans->getPagination()->getPage(),
                 $trans->getPagination()->getLimit())
             ->getResults();
 
         foreach ($data as $faq) {
-            $faq = (new FaqDataTransfer())
+            /** @var $faq PyzFaqEntityTransfer */
+            $nFaq = (new FaqDataTransfer())
                 ->fromArray($faq->toArray(), true);
 
-            $trans->addFaqData($faq);
+            $nFaq->setVoteCount(count($faq->getPyzFaqVotes()));
+
+            $trans->addFaqData($nFaq);
         }
 
         return $trans;

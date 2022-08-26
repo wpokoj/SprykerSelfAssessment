@@ -14,8 +14,9 @@
         <br><br>
         {% for question in data.questions %}
             <div>
-                {{ question.question }} <br>
-                {{ question.answer }} <br>
+                Q: {{ question.question }} <br>
+                A: {{ question.answer }} <br>
+                Votes: {{ question.vote_count }} <br>
             </div>
             <br><br>
         {% endfor %}
