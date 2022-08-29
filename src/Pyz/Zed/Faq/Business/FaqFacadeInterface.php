@@ -21,7 +21,7 @@ interface FaqFacadeInterface {
 
     public function addFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
     public function revokeFaqVote(FaqVoteRequestTransfer $trans): void;
-    public function findFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
+    public function findFaqVote(FaqVoteRequestTransfer $trans): bool;
 
     public function getFaqEntity(FaqTransfer $trans): ?FaqTransfer;
 }

@@ -6,5 +6,5 @@ use Generated\Shared\Transfer\FaqVoteRequestTransfer;
 
 interface VoteFinderInterface {
 
-    public function findVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
+    public function findVote(FaqVoteRequestTransfer $trans): bool;
 }

@@ -17,8 +17,18 @@ class GatewayController extends AbstractGatewayController {
 
     public function sendVoteAction(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
 
-        return $this->getFacade()
-            ->addFaqVote($trans);
+        if($trans->getValue()) {
+            if(!$this->getFacade()->findFaqVote($trans)) {
+                return $this->getFacade()
+                    ->addFaqVote($trans);
+            }
+        }
+        else {
+            $this->getFacade()
+                ->revokeFaqVote($trans);
+        }
+
+        return $trans;
     }
 
 

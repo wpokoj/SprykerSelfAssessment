@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
+use Generated\Shared\Transfer\FaqVoteRequestTransfer;
 use Generated\Shared\Transfer\PyzFaqEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -52,27 +53,38 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
 
         $userLogged = $trans->getFaqCustomer() !== null;
 
+        $voteQuery = $this->getFactory()->createVoteQuery();
 
+        // default results with pagination
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByEnabled(true)
-            ->leftJoinPyzFaqVote()
             ->paginate(
                 $trans->getPagination()->getPage(),
                 $trans->getPagination()->getLimit())
             ->getResults();
 
         foreach ($data as $faq) {
+            // data repacking
+
             /** @var $faq PyzFaqEntityTransfer */
             $nFaq = (new FaqDataTransfer())
                 ->fromArray($faq->toArray(), true);
 
-            $nFaq->setVoteCount(count($faq->getPyzFaqVotes()));
+            // count votes
+            // due to pagination we can't left-join query :(
+            $voteQuery->clear();
 
+            $nFaq->setVoteCount(count(
+                $votes = $voteQuery->filterByIdFaq($faq->getIdFaq())
+                    ->find()->getData()
+            ));
+
+            // check whether logged-in user has voted for given entry
             if($userLogged) {
                 $uid = $trans->getFaqCustomer()->getCustomerId();
 
-                foreach ($faq->getPyzFaqVotes() as $vote) {
+                foreach ($votes as $vote) {
                     if($vote->getIdCustomer() === $uid) {
                         $nFaq->setUserVoted(true);
                         break;
@@ -84,5 +96,16 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         }
 
         return $trans;
+    }
+
+    public function findFaqVote(FaqVoteRequestTransfer $trans): bool {
+
+        $res = $this->getFactory()
+            ->createVoteQuery()
+            ->filterByIdFaq($trans->getIdFaq())
+            ->filterByIdCustomer($trans->getFaqCustomer()->getCustomerId())
+            ->find();
+
+        return count($res->getData()) > 0;
     }
 }

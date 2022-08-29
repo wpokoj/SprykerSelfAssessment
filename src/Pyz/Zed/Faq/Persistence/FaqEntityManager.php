@@ -47,14 +47,14 @@ class FaqEntityManager extends AbstractEntityManager implements FaqEntityManager
 
         $ent->save();
 
-        var_dump($ent->toArray()); die();
-
-
-
         return $trans;
     }
 
     public function revokeVote(FaqVoteRequestTransfer $trans): void {
-        // TODO: Implement revokeVote() method.
+        $this->getFactory()
+            ->createVoteQuery()
+            ->filterByIdFaq($trans->getIdFaq())
+            ->filterByIdCustomer($trans->getFaqCustomer()->getCustomerId())
+            ->delete();
     }
 }

@@ -76,10 +76,14 @@ class FaqFacade extends AbstractFacade implements FaqFacadeInterface {
     }
 
     public function revokeFaqVote(FaqVoteRequestTransfer $trans): void {
-        // TODO: Implement revokeFaqVote() method.
+        $this->getFactory()
+            ->createVoteDeleter()
+            ->deleteVote($trans);
     }
 
-    public function findFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
-        // TODO: Implement findFaqVote() method.
+    public function findFaqVote(FaqVoteRequestTransfer $trans): bool {
+        return $this->getFactory()
+            ->createVoteFinder()
+            ->findVote($trans);
     }
 }
