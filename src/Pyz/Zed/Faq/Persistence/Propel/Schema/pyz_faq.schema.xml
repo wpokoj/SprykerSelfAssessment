@@ -22,4 +22,20 @@
         </foreign-key>
 
     </table>
+
+    <table name="pyz_faq_vote" phpName="PyzFaqVote">
+        <column name="id_faq_vote" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="id_faq" type="INTEGER" primaryKey="true"/>
+        <column name="id_customer" type="INTEGER" primaryKey="true"/>
+
+        <foreign-key foreignTable="pyz_faq">
+            <reference local="id_faq" foreign="id_faq"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_customer">
+            <reference local="id_customer" foreign="id_customer"/>
+        </foreign-key>
+
+    </table>
+
 </database>

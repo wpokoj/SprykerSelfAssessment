@@ -7,7 +7,9 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class FaqRouteProviderPlugin extends AbstractRouteProviderPlugin {
 
-    protected const ROUTE_FAQ_INDEX = 'faq-index';
+    protected const ROUTE_FAQ_INDEX  = '/faq';
+    protected const ROUTE_FAQ_VOTE   = '/faq/vote';
+    protected const ROUTE_FAQ_REVOKE = '/faq/revoke';
 
     /**
      * Specification:
@@ -35,6 +37,12 @@ class FaqRouteProviderPlugin extends AbstractRouteProviderPlugin {
 
         $route = $this->buildRoute('/faq', 'Faq', 'Index', 'indexAction');
         $routeCollection->add(static::ROUTE_FAQ_INDEX, $route);
+
+        $route = $this->buildRoute('/faq/vote', 'Faq', 'Vote', 'indexAction');
+        $routeCollection->add(static::ROUTE_FAQ_VOTE, $route);
+
+        $route = $this->buildRoute('/faq/revoke', 'Faq', 'Revoke', 'indexAction');
+        $routeCollection->add(static::ROUTE_FAQ_REVOKE, $route);
 
         return $routeCollection;
     }
