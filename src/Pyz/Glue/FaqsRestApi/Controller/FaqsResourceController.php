@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\FaqTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Pyz\Glue\FaqsRestApi\FaqsRestApiFactory getFactory()

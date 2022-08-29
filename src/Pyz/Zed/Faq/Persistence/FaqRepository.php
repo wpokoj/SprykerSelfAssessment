@@ -20,16 +20,22 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByIdFaq($id)
-            ->findOne();
+            ->leftJoinWithPyzFaqVote()
+            ->find();
 
-       if($data === null) {
+       if(count($data->getData()) === 0) {
            return null;
        }
 
-       return (new FaqTransfer())->fromArray(
-           $data->toArray(),
+       $res = (new FaqTransfer())->fromArray(
+           ($entry = ($data->getData())[0])->toArray(),
            true,
        );
+
+       /** @var PyzFaqEntityTransfer $entry */
+       $res->setVoteCount(count($entry->getPyzFaqVotes()));
+
+       return $res;
     }
 
     public function getFaqCollection(FaqCollectionTransfer $trans): FaqCollectionTransfer {
@@ -37,13 +43,20 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByEnabled(true)
+            ->leftJoinWithPyzFaqVote()
             ->find();
 
+
         foreach ($data->getData() as $faq) {
-            $faq = (new FaqTransfer())
+            /** @var PyzFaqEntityTransfer $faq */
+            $nFaq = (new FaqTransfer())
                 ->fromArray($faq->toArray());
 
-            $trans->addFaq($faq);
+            $nFaq->setVoteCount(
+                count($faq->getPyzFaqVotes())
+            );
+
+            $trans->addFaq($nFaq);
         }
 
         return $trans;

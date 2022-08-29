@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestFaqVotesRequestAttributes">
+        <property name="idFaq" type="int"/>
+        <property name="upVoted" type="bool"/>
+    </transfer>
+
+    <transfer name="FaqVoteCollection">
+        <property name="customerId" type="int" />
+        <property name="faqs" type="RestFaqVotesRequestAttributes[]" singular="faq"/>
+    </transfer>
+
+</transfers>
+
