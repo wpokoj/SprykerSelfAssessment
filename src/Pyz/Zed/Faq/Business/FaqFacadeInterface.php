@@ -22,12 +22,9 @@ interface FaqFacadeInterface {
     public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer;
     public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer;
 
-    public function addFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
-    public function revokeFaqVote(FaqVoteRequestTransfer $trans): void;
-    public function findFaqVote(FaqVoteRequestTransfer $trans): bool;
+    public function addFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer;
+    public function revokeFaqVote(FaqVoteTransfer $trans): void;
 
     public function getFaqEntity(FaqTransfer $trans): ?FaqTransfer;
 
-
-    public function setFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer;
 }

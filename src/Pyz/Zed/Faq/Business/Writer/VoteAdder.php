@@ -14,11 +14,7 @@ class VoteAdder implements VoteAdderInterface {
         $this->ent = $ent;
     }
 
-    public function addVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
+    public function addVote(FaqVoteTransfer $trans): FaqVoteTransfer {
         return $this->ent->addVote($trans);
-    }
-
-    public function setFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer {
-        return $trans;
     }
 }

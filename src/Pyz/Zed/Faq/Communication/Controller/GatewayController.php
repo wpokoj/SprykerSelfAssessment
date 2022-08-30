@@ -18,17 +18,18 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController {
 
-    public function sendVoteAction(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
+    public function setFaqVoteAction(FaqVoteTransfer $trans): FaqVoteTransfer {
 
-        if($trans->getValue()) {
-            if(!$this->getFacade()->findFaqVote($trans)) {
-                return $this->getFacade()
-                    ->addFaqVote($trans);
+        $setTo = $trans->getVoted();
+        $setFrom = $this->getFacade()->getFaqVoteById($trans)->getVoted();
+
+        if($setFrom !== $setTo) {
+            if($setTo) { // vote
+                return $this->getFacade()->addFaqVote($trans);
             }
-        }
-        else {
-            $this->getFacade()
-                ->revokeFaqVote($trans);
+            else {
+                $this->getFacade()->revokeFaqVote($trans);
+            }
         }
 
         return $trans;
@@ -53,7 +54,6 @@ class GatewayController extends AbstractGatewayController {
             ->updateFaqEntity($trans);
     }
 
-
     public function deleteFaqEntityAction(FaqTransfer  $trans): FaqTransfer {
 
         $this->getFacade()
@@ -61,7 +61,6 @@ class GatewayController extends AbstractGatewayController {
 
         return $trans;
     }
-
 
     public function createFaqEntityAction(FaqTransfer  $trans): FaqTransfer {
 
@@ -77,36 +76,5 @@ class GatewayController extends AbstractGatewayController {
     public function getFaqVoteByIdAction(FaqVoteTransfer $trans): FaqVoteTransfer {
         return $this->getFacade()
             ->getFaqVoteById($trans);
-    }
-
-    public function setFaqVoteAction(FaqVoteTransfer $trans): FaqVoteTransfer {
-
-        if($trans->getVoted()) {
-            $res = $this->getFacade()->getFaqVoteById($trans);
-
-            if (!$res->getVoted()) {
-                $this->getFacade()->addFaqVote(
-                    (new FaqVoteRequestTransfer())
-                        ->setIdFaq($trans->getIdFaq())
-                        ->setFaqCustomer((new FaqCustomerTransfer())
-                            ->setCustomerId($trans->getIdCustomer()))
-                );
-            }
-
-            $trans->setVoted(true);
-        }
-        else {
-            $this->getFacade()->revokeFaqVote(
-                (new FaqVoteRequestTransfer())
-                    ->setIdFaq($trans->getIdFaq())
-                    ->setFaqCustomer((new FaqCustomerTransfer())
-                        ->setCustomerId($trans->getIdCustomer()))
-
-            );
-
-            $trans->setVoted(false);
-        }
-
-        return $trans;
     }
 }

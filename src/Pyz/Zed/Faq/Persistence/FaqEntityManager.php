@@ -4,6 +4,7 @@ namespace Pyz\Zed\Faq\Persistence;
 
 use Generated\Shared\Transfer\FaqTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 use Orm\Zed\Planet\Persistence\PyzFaqVote;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -38,23 +39,23 @@ class FaqEntityManager extends AbstractEntityManager implements FaqEntityManager
             ->delete();
     }
 
-    public function addVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
+    public function addVote(FaqVoteTransfer $trans): FaqVoteTransfer {
 
         $ent = new PyzFaqVote();
 
         $ent->setIdFaq($trans->getIdFaq());
-        $ent->setIdCustomer($trans->getFaqCustomer()->getCustomerId());
+        $ent->setIdCustomer($trans->getIdCustomer());
 
         $ent->save();
 
         return $trans;
     }
 
-    public function revokeVote(FaqVoteRequestTransfer $trans): void {
+    public function revokeVote(FaqVoteTransfer $trans): void {
         $this->getFactory()
             ->createVoteQuery()
             ->filterByIdFaq($trans->getIdFaq())
-            ->filterByIdCustomer($trans->getFaqCustomer()->getCustomerId())
+            ->filterByIdCustomer($trans->getIdCustomer())
             ->delete();
     }
 }

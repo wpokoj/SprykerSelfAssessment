@@ -22,9 +22,6 @@ class IndexController extends AbstractController {
 
         $customerValidator = $this->getFactory()->createCustomerValidator();
 
-        var_dump($customerValidator->isCustomerLogged());
-        var_dump($customerValidator->getLoggedCustomerId());
-
         $limit = intval($req->query->get('items-per-page') ?? 10);
         $page  = intval($req->query->get('page') ?? 1);
 

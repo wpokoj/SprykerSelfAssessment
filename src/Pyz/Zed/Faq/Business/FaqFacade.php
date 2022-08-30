@@ -62,14 +62,14 @@ class FaqFacade extends AbstractFacade implements FaqFacadeInterface {
         return $trans->fromArray($res->toArray());
     }
 
-    public function addFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
+    public function addFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer {
 
         return $this->getFactory()
             ->createVoteAdder()
             ->addVote($trans);
     }
 
-    public function revokeFaqVote(FaqVoteRequestTransfer $trans): void {
+    public function revokeFaqVote(FaqVoteTransfer $trans): void {
         $this->getFactory()
             ->createVoteDeleter()
             ->deleteVote($trans);

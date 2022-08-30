@@ -4,6 +4,7 @@ namespace Pyz\Zed\Faq\Persistence;
 
 use Generated\Shared\Transfer\FaqTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 
 interface FaqEntityManagerInterface {
 
@@ -11,6 +12,6 @@ interface FaqEntityManagerInterface {
     public function updateFaqEntity(FaqTransfer $trans): FaqTransfer;
     public function deleteFaqEntity(FaqTransfer $trans): void;
 
-    public function addVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
-    public function revokeVote(FaqVoteRequestTransfer $trans): void;
+    public function addVote(FaqVoteTransfer $trans): FaqVoteTransfer;
+    public function revokeVote(FaqVoteTransfer $trans): void;
 }

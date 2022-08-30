@@ -119,6 +119,9 @@ class FaqsRestApiZedStub implements FaqsRestApiZedStubInterface {
     }
 
     public function setUserVote(FaqVoteTransfer $trans): FaqVoteTransfer {
+
+        //var_dump($trans);
+
         try {
             /** @var \Generated\Shared\Transfer\FaqVoteTransfer $trans */
             $trans = $this->zedRequestClient->call(
@@ -127,6 +130,7 @@ class FaqsRestApiZedStub implements FaqsRestApiZedStubInterface {
             );
         }
         catch(\Exception $e) { // not found
+            var_dump($e->getMessage());
             return $trans;
         }
 
