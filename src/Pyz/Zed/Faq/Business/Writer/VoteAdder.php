@@ -3,6 +3,7 @@
 namespace Pyz\Zed\Faq\Business\Writer;
 
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 use Pyz\Zed\Faq\Persistence\FaqEntityManagerInterface;
 
 class VoteAdder implements VoteAdderInterface {
@@ -15,5 +16,9 @@ class VoteAdder implements VoteAdderInterface {
 
     public function addVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {
         return $this->ent->addVote($trans);
+    }
+
+    public function setFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer {
+        return $trans;
     }
 }

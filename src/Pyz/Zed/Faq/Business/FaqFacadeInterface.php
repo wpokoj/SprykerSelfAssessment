@@ -5,7 +5,9 @@ namespace Pyz\Zed\Faq\Business;
 use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
+use Generated\Shared\Transfer\FaqVoteCollectionTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 
 interface FaqFacadeInterface {
@@ -24,4 +26,8 @@ interface FaqFacadeInterface {
     public function findFaqVote(FaqVoteRequestTransfer $trans): bool;
 
     public function getFaqEntity(FaqTransfer $trans): ?FaqTransfer;
+
+    public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer;
+    public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer;
+    public function setFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer;
 }

@@ -11,7 +11,12 @@ use Pyz\Glue\FaqsRestApi\Processor\Faqs\Reader\FaqsReader;
 use Pyz\Glue\FaqsRestApi\Processor\Faqs\Reader\FaqsReaderInterface;
 use Pyz\Glue\FaqsRestApi\Processor\Faqs\Updater\FaqsUpdater;
 use Pyz\Glue\FaqsRestApi\Processor\Faqs\Updater\FaqsUpdaterInterface;
+use Pyz\Glue\FaqsRestApi\Processor\FaqVotes\Reader\FaqVotesReader;
+use Pyz\Glue\FaqsRestApi\Processor\FaqVotes\Reader\FaqVotesReaderInterface;
+use Pyz\Glue\FaqsRestApi\Processor\FaqVotes\Writer\FaqVotesWriter;
 use Pyz\Glue\FaqsRestApi\Processor\Mapper\FaqsResourceMapper;
+use Pyz\Glue\FaqsRestApi\Processor\Mapper\FaqVotesResourceMapper;
+use Pyz\Glue\FaqsRestApi\Processor\Mapper\FaqVotesResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 
@@ -23,6 +28,10 @@ class FaqsRestApiFactory extends AbstractFactory{
     public function createFaqsResourceMapper(): FaqsResourceMapper
     {
         return new FaqsResourceMapper();
+    }
+
+    public function createFaqVotesResourceMapper(): FaqVotesResourceMapperInterface {
+        return new FaqVotesResourceMapper();
     }
 
     public function createFaqsReader(): FaqsReaderInterface
@@ -53,6 +62,23 @@ class FaqsRestApiFactory extends AbstractFactory{
     public function createFaqUpdater(): FaqsUpdaterInterface {
 
         return new FaqsUpdater(
+            $this->getClient(),
+            $this->getResourceBuilder(),
+        );
+    }
+
+    public function createFaqVoteReader(): FaqVotesReaderInterface {
+
+        return new FaqVotesReader(
+            $this->getClient(),
+            $this->getResourceBuilder(),
+            $this->createFaqVotesResourceMapper(),
+        );
+    }
+
+    public function createFaqVoteWriter(): FaqVotesWriter {
+
+        return new FaqVotesWriter(
             $this->getClient(),
             $this->getResourceBuilder(),
         );

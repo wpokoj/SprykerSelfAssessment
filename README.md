@@ -1,8 +1,6 @@
 # Spryker B2C Self Assessment
 
-Jakbyś był zainteresowany zrobieniem rest api by dostawać planety po id (...com/planets/1) to id możesz chwycić przez
-
-$restRequest->getResource()->getId()
+curl http://glue.de.spryker.local/access-tokens -X POST -d "{\"data\": {\"type\": \"access-tokens\", \"attributes\": { \"username\": \"spencor.hopkin@spryker.com\", \"password\": \"change123\" } } }"
 
 ## Additional packages
 
@@ -30,6 +28,7 @@ Acceptance Criteria:
 [Done] Module exposes REST API endpoints to create and remove, update, delete entities by identifier (CRUD)
 [Done] CRUD endpoints are available for logged in users
 [Done] Errors are properly handled
+
 
 [(not really) Done] Challenge 1: Each endpoint is available only if enabled in config file, if not 404 is returned.
 Challenge 2: FAQ data are localized when they’re returned.

@@ -7,7 +7,10 @@
 
 namespace Pyz\Glue\GlueApplication;
 
+use Pyz\Glue\FaqsRestApi\Plugin\FaqsReaderResourcePlugin;
 use Pyz\Glue\FaqsRestApi\Plugin\FaqsResourceRoutePlugin;
+use Pyz\Glue\FaqsRestApi\Plugin\FaqVotesReaderResourcePlugin;
+use Pyz\Glue\FaqsRestApi\Plugin\FaqVotesResourcePlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokenRestRequestValidatorPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokenRestUserFinderPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokensResourceRoutePlugin;
@@ -257,6 +260,9 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new GuestConfiguredBundlesResourceRoutePlugin(),
 
             new FaqsResourceRoutePlugin(),
+            new FaqsReaderResourcePlugin(),
+            new FaqVotesResourcePlugin(),
+            new FaqVotesReaderResourcePlugin(),
         ];
     }
 
