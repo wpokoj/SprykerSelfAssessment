@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class FaqClient extends AbstractClient implements FaqClientInterface {
 
 
-    public function getAllFaqs(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
+    public function getAllFaqs(FaqCollectionTransfer $trans): FaqCollectionTransfer {
 
         return  $this->getFactory()->createFaqZedStub()->getAllFaqs($trans);
     }

@@ -17,9 +17,10 @@ interface FaqFacadeInterface {
     public function deleteFaqEntity(FaqTransfer $trans): void;
 
     public function findFaqEntityById(int $id): ?FaqTransfer;
-
     public function getFaqCollection(FaqCollectionTransfer $trans): FaqCollectionTransfer;
-    public function getFaqCollectionPaginated(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer;
+
+    public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer;
+    public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer;
 
     public function addFaqVote(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
     public function revokeFaqVote(FaqVoteRequestTransfer $trans): void;
@@ -27,7 +28,6 @@ interface FaqFacadeInterface {
 
     public function getFaqEntity(FaqTransfer $trans): ?FaqTransfer;
 
-    public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer;
-    public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer;
+
     public function setFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer;
 }

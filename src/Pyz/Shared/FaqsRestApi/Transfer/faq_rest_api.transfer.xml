@@ -7,6 +7,7 @@
         <property name="question" type="string"/>
         <property name="answer" type="string"/>
         <property name="voteCount" type="int"/>
+        <property name="voted" type="bool"/>
     </transfer>
 
 
@@ -15,8 +16,13 @@
         <property name="answer" type="string"/>
     </transfer>
 
-    <transfer name="FaqCollection">
-        <property name="faqs" type="Faq[]" singular="faq"/>
+    <transfer name="RestFaqVotesRequestAttributes">
+        <property name="idFaq" type="int"/>
+        <property name="voted" type="bool"/>
+    </transfer>
+
+    <transfer name="RestFaqVotesResponseAttributes">
+        <property name="voted" type="bool"/>
     </transfer>
 
 </transfers>

@@ -25,11 +25,4 @@ class FaqReader implements FaqReaderInterface {
 
         return $this->repo->getFaqCollection($trans);
     }
-
-    public function getFaqCollectionPaginated(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
-
-        return $this->repo->getFaqCollectionPaginated(
-            $trans
-        );
-    }
 }

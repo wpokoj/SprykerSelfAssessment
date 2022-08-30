@@ -16,17 +16,16 @@ class FaqZedStub implements FaqZedStubInterface {
         $this->zedRequestClient = $zedRequestClient;
     }
 
-    public function getAllFaqs(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
+    public function getAllFaqs(FaqCollectionTransfer $trans): FaqCollectionTransfer {
 
-        /** @var \Generated\Shared\Transfer\FaqDataCollectionTransfer $faqCollectionTransfer */
+        /** @var \Generated\Shared\Transfer\FaqCollectionTransfer $faqCollectionTransfer */
 
         $faqCollectionTransfer = $this->zedRequestClient->call(
-            '/faq/gateway/get-faq-collection-paginated',
+            '/faq/gateway/get-faq-collection',
             $trans
         );
 
         return $faqCollectionTransfer;
-
     }
 
     public function sendVoteRequest(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer {

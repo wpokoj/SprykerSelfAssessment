@@ -8,7 +8,6 @@ use Generated\Shared\Transfer\FaqVoteTransfer;
 
 interface VoteFinderInterface {
 
-    public function findVote(FaqVoteRequestTransfer $trans): bool;
     public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer;
     public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer;
 }

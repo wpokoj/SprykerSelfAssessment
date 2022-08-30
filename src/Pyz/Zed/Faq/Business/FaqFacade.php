@@ -51,14 +51,6 @@ class FaqFacade extends AbstractFacade implements FaqFacadeInterface {
             ->getFaqCollection($trans);
     }
 
-    public function getFaqCollectionPaginated(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
-
-        return $this->getFactory()
-            ->createFaqReader()
-            ->getFaqCollectionPaginated($trans);
-    }
-
-
     public function getFaqEntity(FaqTransfer $trans): ?FaqTransfer {
 
         $res = $this->findFaqEntityById($trans->getIdFaq());

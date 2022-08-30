@@ -24,6 +24,8 @@ class FaqsCreator implements FaqsCreatorInterface {
     }
 
     public function createFaqEntity(RestRequestInterface $restRequest, FaqTransfer $trans): RestResponseInterface {
+        $trans->setEnabled(true);
+
         $response = $this->restResourceBuilder->createRestResponse();
 
         $res = $this->faqsRestApiClient

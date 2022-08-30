@@ -9,6 +9,6 @@ use Generated\Shared\Transfer\PaginationTransfer;
 
 interface FaqZedStubInterface {
 
-    public function getAllFaqs(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer;
+    public function getAllFaqs(FaqCollectionTransfer $trans): FaqCollectionTransfer;
     public function sendVoteRequest(FaqVoteRequestTransfer $trans): FaqVoteRequestTransfer;
 }

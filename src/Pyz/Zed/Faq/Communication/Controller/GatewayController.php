@@ -35,12 +35,6 @@ class GatewayController extends AbstractGatewayController {
     }
 
 
-    public function getFaqCollectionPaginatedAction(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
-
-        return $this->getFacade()
-            ->getFaqCollectionPaginated($trans);
-    }
-
     public function getFaqCollectionAction(FaqCollectionTransfer $trans): FaqCollectionTransfer {
 
         return $this->getFacade()
