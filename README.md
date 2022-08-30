@@ -28,8 +28,8 @@ As a machine user I want to connect to the eCommerce to expose FAQ data to exter
 Acceptance Criteria:
 [Done] Module exposes REST API endpoints to fetch list of entities, and entity by identifier
 [Done] Module exposes REST API endpoints to create and remove, update, delete entities by identifier (CRUD)
-[Postponed] CRUD endpoints are available for logged in users
-[Done ig] Errors are properly handled
+[Done] CRUD endpoints are available for logged in users
+[Done] Errors are properly handled
 
 [(not really) Done] Challenge 1: Each endpoint is available only if enabled in config file, if not 404 is returned.
 Challenge 2: FAQ data are localized when they’re returned.
@@ -39,7 +39,7 @@ As a customer I want to easily navigate to FAQ page so that I don’t have to ca
 
 Acceptance Criteria:
 [Done] A FAQ page is available via Yves with list of active FAQ entities
-[Done ig] Errors are properly handled
+[Done] Errors are properly handled
 
 [More or less done] Challenge: Pagination is provided
 
@@ -47,9 +47,9 @@ US 4
 As a customer I want to mark FAQ entity whether it is helpful or not to let others know if an answer helps.
 
 Acceptance Criteria:
-Voting results are visible for guests and logged in users
-Voting is available for logged in users only via Yves
-Errors are properly handled
+[Done] Voting results are visible for guests and logged in users
+[Done] Voting is available for logged in users only via Yves
+[Done] Errors are properly handled
 
 Challenge: A customer can add only one vote. After revoking a vote, he can vote again.
 
@@ -57,9 +57,9 @@ US 5
 As a machine user I want to mark FAQ entity whether it is helpful or not to integrate external applications.
 
 Acceptance Criteria:
-Voting results are visible for guests and logged in users
-Voting endpoints are available for logged in users only
-Errors are properly handled
+[Done] Voting results are visible for guests and logged in users
+[Done] Voting endpoints are available for logged in users only
+[Done] Errors are properly handled
 
 Challenge: A customer can add only one vote. After revoking a vote, he can vote again.
 
