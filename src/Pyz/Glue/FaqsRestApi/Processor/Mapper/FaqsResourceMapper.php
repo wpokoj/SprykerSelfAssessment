@@ -14,6 +14,8 @@ class FaqsResourceMapper implements FaqsResourceMapperInterface {
             = (new RestFaqsResponseAttributesTransfer())
             ->fromArray($faqData->toArray(), true);
 
+        $restFaqAttributesTransfer->setVoted($faqData->getUserVoted());
+
         return $restFaqAttributesTransfer;
     }
 }

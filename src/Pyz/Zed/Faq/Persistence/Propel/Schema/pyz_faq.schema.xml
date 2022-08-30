@@ -28,11 +28,11 @@
         <column name="id_faq" type="INTEGER" primaryKey="true"/>
         <column name="id_customer" type="INTEGER" primaryKey="true"/>
 
-        <foreign-key foreignTable="pyz_faq">
+        <foreign-key foreignTable="pyz_faq" onDelete = "cascade">
             <reference local="id_faq" foreign="id_faq"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_customer">
+        <foreign-key foreignTable="spy_customer" onDelete = "cascade">
             <reference local="id_customer" foreign="id_customer"/>
         </foreign-key>
 

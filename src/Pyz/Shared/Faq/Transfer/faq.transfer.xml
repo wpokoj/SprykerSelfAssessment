@@ -3,22 +3,35 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="FaqCollection">
+        <property name="faqs" type="Faq[]" singular="faq"/>
+        <property name="idCustomer" type="int"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
     <transfer name="Faq">
         <property name="idFaq" type="int"/>
         <property name="question" type="string"/>
         <property name="answer" type="string"/>
         <property name="enabled" type="bool"/>
-        <property name="translations" type="LocalizedFaq[]"/>
         <property name="voteCount" type="int"/>
+        <property name="userVoted" type="bool"/>
     </transfer>
 
-    <transfer name="FaqLocalized">
-        <property name="idFaqLocalized" type="int"/>
-        <property name="question" type="string"/>
-        <property name="answer" type="string"/>
-        <property name="storeRelation" type="string" />
-        <property name="idFaq" type="int" />
-        <property name="originalFaq" type="Faq" />
+    <transfer name="FaqVoteCollection">
+        <property name="customerId" type="int" />
+        <property name="faqs" type="FaqVote[]" singular="faq"/>
+    </transfer>
+
+    <transfer name="FaqVote">
+        <property name="idCustomer" type="int" />
+        <property name="idFaq" type="int"/>
+        <property name="voted" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

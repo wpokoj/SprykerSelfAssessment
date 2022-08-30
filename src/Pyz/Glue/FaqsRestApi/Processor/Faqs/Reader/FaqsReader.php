@@ -47,8 +47,15 @@ class FaqsReader implements FaqsReaderInterface
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        $transfer = new FaqCollectionTransfer();
+
+        if(($user = $restRequest->getUser()) !== null) {
+
+            $transfer->setIdCustomer(intval($user->getSurrogateIdentifier()));
+        }
+
         $planetCollectionTransfer =
-            $this->faqsRestApiClient->getFaqCollection(new FaqCollectionTransfer());
+            $this->faqsRestApiClient->getFaqCollection($transfer);
 
 
         foreach ($planetCollectionTransfer->getFaqs() as $faqTransfer) {

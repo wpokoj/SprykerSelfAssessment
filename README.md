@@ -1,5 +1,7 @@
 # Spryker B2C Self Assessment
 
+Docs:[HackMD](https://hackmd.io/WU__NhTWQWuAguQupRxfUQ?both)
+
 curl http://glue.de.spryker.local/access-tokens -X POST -d "{\"data\": {\"type\": \"access-tokens\", \"attributes\": { \"username\": \"spencor.hopkin@spryker.com\", \"password\": \"change123\" } } }"
 
 ## Additional packages
@@ -26,8 +28,9 @@ As a machine user I want to connect to the eCommerce to expose FAQ data to exter
 Acceptance Criteria:
 [Done] Module exposes REST API endpoints to fetch list of entities, and entity by identifier
 [Done] Module exposes REST API endpoints to create and remove, update, delete entities by identifier (CRUD)
-[Bug solved :)] CRUD endpoints are available for logged in users
-[Done Errors are properly handled
+[Done] CRUD endpoints are available for logged in users
+[Done] Errors are properly handled
+
 
 [(not really) Done] Challenge 1: Each endpoint is available only if enabled in config file, if not 404 is returned.
 Challenge 2: FAQ data are localized when they’re returned.
@@ -37,7 +40,7 @@ As a customer I want to easily navigate to FAQ page so that I don’t have to ca
 
 Acceptance Criteria:
 [Done] A FAQ page is available via Yves with list of active FAQ entities
-[Done ig] Errors are properly handled
+[Done] Errors are properly handled
 
 [More or less done] Challenge: Pagination is provided
 
@@ -55,9 +58,9 @@ US 5
 As a machine user I want to mark FAQ entity whether it is helpful or not to integrate external applications.
 
 Acceptance Criteria:
-Voting results are visible for guests and logged in users
-Voting endpoints are available for logged in users only
-Errors are properly handled
+[Done] Voting results are visible for guests and logged in users
+[Done] Voting endpoints are available for logged in users only
+[Done] Errors are properly handled
 
 Challenge: A customer can add only one vote. After revoking a vote, he can vote again.
 

@@ -4,6 +4,7 @@ namespace Pyz\Yves\Faq\Controller;
 
 use Generated\Shared\Transfer\FaqCustomerTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 use Pyz\Client\Faq\FaqClientInterface;
 use Pyz\Yves\Faq\FaqFactory;
 use Spryker\Yves\Kernel\Controller\AbstractController;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VoteController extends AbstractController {
 
-    public function indexAction(Request $req) {
+    private function sendVote(Request $req, bool $val): \Symfony\Component\HttpFoundation\RedirectResponse {
         $validator = $this->getFactory()->createCustomerValidator();
 
         if(!$validator->isCustomerLogged()) {
@@ -32,15 +33,22 @@ class VoteController extends AbstractController {
 
         $faqId = intval($faqId);
 
-        $data = (new FaqVoteRequestTransfer())
-            ->setFaqCustomer((new FaqCustomerTransfer())
-                ->setCustomerId($validator->getLoggedCustomerId()))
+        $data = (new FaqVoteTransfer())
+            ->setIdCustomer($validator->getLoggedCustomerId())
             ->setIdFaq($faqId)
-            ->setValue(true);
+            ->setVoted($val);
 
         $this->getClient()->sendVoteRequest($data);
 
-        $this->addSuccessMessage('Voted successfully');
+        $this->addSuccessMessage('Vote updated successfully');
         return $this->redirectResponseInternal('/faq');
+    }
+
+    public function revokeAction(Request $req): \Symfony\Component\HttpFoundation\RedirectResponse {
+        return $this->sendVote($req, false);
+    }
+
+    public function voteAction(Request $req): \Symfony\Component\HttpFoundation\RedirectResponse {
+        return $this->sendVote($req, true);
     }
 }

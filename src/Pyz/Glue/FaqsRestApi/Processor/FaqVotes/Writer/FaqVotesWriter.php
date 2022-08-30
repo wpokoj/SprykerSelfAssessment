@@ -32,7 +32,7 @@ class FaqVotesWriter implements FaqVotesWriterInterface {
             ->fromArray(
                 $restRequest->getResource()->getAttributes()->toArray(),
                 true)
-            ->setIdCustomer($restRequest->getUser()->getSurrogateIdentifier());
+            ->setIdCustomer(intval($restRequest->getUser()->getSurrogateIdentifier()));
 
 
         $voteRes =

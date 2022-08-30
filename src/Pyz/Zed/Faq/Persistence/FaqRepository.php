@@ -23,6 +23,7 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByIdFaq($id)
+            ->filterByEnabled(true)
             ->leftJoinWithPyzFaqVote()
             ->find();
 
@@ -43,87 +44,55 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
 
     public function getFaqCollection(FaqCollectionTransfer $trans): FaqCollectionTransfer {
 
-        $data = $this->getFactory()
-            ->createFaqQuery()
-            ->filterByEnabled(true)
-            ->leftJoinWithPyzFaqVote()
-            ->find();
+        $uid = $trans->getIdCustomer();
 
+        $voteQuery = $this->getFactory()->createVoteQuery();
+
+        $query = $this->getFactory()
+            ->createFaqQuery()
+            ->filterByEnabled(true);
+
+        if(($page = $trans->getPagination()) !== null) {
+
+            $data = $query->paginate($page->getPage(), $page->getLimit())->getResults();
+        }
+        else {
+
+            $data = $query->find();
+        }
 
         foreach ($data->getData() as $faq) {
             /** @var PyzFaqEntityTransfer $faq */
             $nFaq = (new FaqTransfer())
                 ->fromArray($faq->toArray());
 
-            $nFaq->setVoteCount(
-                count($faq->getPyzFaqVotes())
-            );
+            $voteQuery->clear();
+
+            $nFaq->setVoteCount(count(
+                $votes = $voteQuery->filterByIdFaq($nFaq->getIdFaq())->find()->getData()
+            ));
+
+            if($uid !== null) {
+                $found = false;
+
+                foreach($votes as $vote) {
+                    /** @var PyzFaqVote $vote */
+                    if($vote->getIdCustomer() === $uid) {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                $nFaq->setUserVoted($found);
+            }
 
             $trans->addFaq($nFaq);
         }
 
-        return $trans;
-    }
-
-    public function getFaqCollectionPaginated(FaqDataCollectionTransfer $trans): FaqDataCollectionTransfer {
-
-        $userLogged = $trans->getFaqCustomer() !== null;
-
-        $voteQuery = $this->getFactory()->createVoteQuery();
-
-        // default results with pagination
-        $data = $this->getFactory()
-            ->createFaqQuery()
-            ->filterByEnabled(true)
-            ->paginate(
-                $trans->getPagination()->getPage(),
-                $trans->getPagination()->getLimit())
-            ->getResults();
-
-        foreach ($data as $faq) {
-            // data repacking
-
-            /** @var $faq PyzFaqEntityTransfer */
-            $nFaq = (new FaqDataTransfer())
-                ->fromArray($faq->toArray(), true);
-
-            // count votes
-            // due to pagination we can't left-join query :(
-            $voteQuery->clear();
-
-            $nFaq->setVoteCount(count(
-                $votes = $voteQuery->filterByIdFaq($faq->getIdFaq())
-                    ->find()->getData()
-            ));
-
-            // check whether logged-in user has voted for given entry
-            if($userLogged) {
-                $uid = $trans->getFaqCustomer()->getCustomerId();
-
-                foreach ($votes as $vote) {
-                    if($vote->getIdCustomer() === $uid) {
-                        $nFaq->setUserVoted(true);
-                        break;
-                    }
-                }
-            }
-
-            $trans->addFaqData($nFaq);
-        }
 
         return $trans;
     }
 
-    public function findFaqVote(FaqVoteRequestTransfer $trans): bool {
-
-        $res = $this->getFactory()
-            ->createVoteQuery()
-            ->filterByIdFaq($trans->getIdFaq())
-            ->filterByIdCustomer($trans->getFaqCustomer()->getCustomerId())
-            ->find();
-
-        return count($res->getData()) > 0;
-    }
 
     public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer {
 
@@ -150,7 +119,7 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
     }
 
 
-    public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer {
+    public function findFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer {
         $res = $this->getFactory()
             ->createVoteQuery()
             ->filterByIdCustomer($trans->getIdCustomer())
