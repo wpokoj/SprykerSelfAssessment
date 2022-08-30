@@ -41,6 +41,7 @@ class FaqVotesReader implements FaqVotesReaderInterface {
             $this->faqsRestApiClient->getUserVoteByFaqId(
                 (new FaqVoteTransfer())
                     ->setIdCustomer($restRequest->getUser()->getSurrogateIdentifier())
+                    ->setIdFaq($restRequest->getResource()->getId())
             );
 
         if($res->getIdFaq() === null || $res->getVoted() === null) {

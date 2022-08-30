@@ -6,8 +6,11 @@ use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\FaqDataTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
+use Generated\Shared\Transfer\FaqVoteCollectionTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 use Generated\Shared\Transfer\PyzFaqEntityTransfer;
+use Orm\Zed\Planet\Persistence\PyzFaqVote;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -120,5 +123,41 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
             ->find();
 
         return count($res->getData()) > 0;
+    }
+
+    public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer {
+
+        $uid = $trans->getCustomerId();
+
+        $data = $this->getFactory()
+            ->createVoteQuery()
+            ->filterByIdCustomer($uid)
+            ->find();
+
+        foreach ($data->getData() as $vote) {
+            /** @var PyzFaqVote $vote */
+
+            $trans->addFaq(
+                (new FaqVoteTransfer())->fromArray(
+                    $vote->toArray(),
+                    true
+                )
+                ->setVoted(true)
+            );
+        }
+
+        return $trans;
+    }
+
+
+    public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer {
+        $res = $this->getFactory()
+            ->createVoteQuery()
+            ->filterByIdCustomer($trans->getIdCustomer())
+            ->filterByIdFaq($trans->getIdFaq())
+            ->find();
+
+        $trans->setVoted(count($res->getData()) > 0);
+        return $trans;
     }
 }

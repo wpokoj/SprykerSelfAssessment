@@ -21,7 +21,7 @@
 
     <transfer name="FaqVoteCollection">
         <property name="customerId" type="int" />
-        <property name="faqs" type="FaqVoteTransfer[]" singular="faq"/>
+        <property name="faqs" type="FaqVote[]" singular="faq"/>
     </transfer>
 
 </transfers>

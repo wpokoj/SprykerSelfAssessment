@@ -22,8 +22,8 @@ class FaqsReaderResourcePlugin
         }
 
         $resourceRouteCollection->addGet('get', true);
-        $resourceRouteCollection->addPost('post', true);
-        $resourceRouteCollection->addDelete('delete', true);
+        //$resourceRouteCollection->addPost('post', true);
+        //$resourceRouteCollection->addDelete('delete', true);
 
         return $resourceRouteCollection;
     }
@@ -33,7 +33,7 @@ class FaqsReaderResourcePlugin
     }
 
     public function getController(): string {
-        return 'faq-votes-resource';
+        return 'faqs-resource';
     }
 
     public function getResourceAttributesClassName(): string {

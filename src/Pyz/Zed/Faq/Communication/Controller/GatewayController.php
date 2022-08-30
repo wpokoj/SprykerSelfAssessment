@@ -3,6 +3,7 @@
 namespace Pyz\Zed\Faq\Communication\Controller;
 
 use Generated\Shared\Transfer\FaqCollectionTransfer;
+use Generated\Shared\Transfer\FaqCustomerTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
 use Generated\Shared\Transfer\FaqVoteCollectionTransfer;
@@ -75,14 +76,43 @@ class GatewayController extends AbstractGatewayController {
     }
 
     public function getFaqVoteCollectionAction(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer {
-        return $trans;
+        return $this->getFacade()
+            ->getFaqVoteCollection($trans);
     }
 
     public function getFaqVoteByIdAction(FaqVoteTransfer $trans): FaqVoteTransfer {
-        return $trans;
+        return $this->getFacade()
+            ->getFaqVoteById($trans);
     }
 
     public function setFaqVoteAction(FaqVoteTransfer $trans): FaqVoteTransfer {
+
+        if($trans->getVoted()) {
+            $res = $this->getFacade()->getFaqVoteById($trans);
+
+            if (!$res->getVoted()) {
+                $this->getFacade()->addFaqVote(
+                    (new FaqVoteRequestTransfer())
+                        ->setIdFaq($trans->getIdFaq())
+                        ->setFaqCustomer((new FaqCustomerTransfer())
+                            ->setCustomerId($trans->getIdCustomer()))
+                );
+            }
+
+            $trans->setVoted(true);
+        }
+        else {
+            $this->getFacade()->revokeFaqVote(
+                (new FaqVoteRequestTransfer())
+                    ->setIdFaq($trans->getIdFaq())
+                    ->setFaqCustomer((new FaqCustomerTransfer())
+                        ->setCustomerId($trans->getIdCustomer()))
+
+            );
+
+            $trans->setVoted(false);
+        }
+
         return $trans;
     }
 }
