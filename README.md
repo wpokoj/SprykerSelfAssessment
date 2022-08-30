@@ -1,5 +1,7 @@
 # Spryker B2C Self Assessment
 
+Docs:[HackMD](https://hackmd.io/WU__NhTWQWuAguQupRxfUQ?both)
+
 curl http://glue.de.spryker.local/access-tokens -X POST -d "{\"data\": {\"type\": \"access-tokens\", \"attributes\": { \"username\": \"spencor.hopkin@spryker.com\", \"password\": \"change123\" } } }"
 
 ## Additional packages
