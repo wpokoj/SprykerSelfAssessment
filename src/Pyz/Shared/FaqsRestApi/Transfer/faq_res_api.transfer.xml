@@ -6,6 +6,13 @@
     <transfer name="RestFaqsResponseAttributes">
         <property name="question" type="string"/>
         <property name="answer" type="string"/>
+        <property name="voteCount" type="int"/>
+    </transfer>
+
+
+    <transfer name="RestFaqsRequestAttributes">
+        <property name="question" type="string"/>
+        <property name="answer" type="string"/>
     </transfer>
 
     <transfer name="FaqCollection">

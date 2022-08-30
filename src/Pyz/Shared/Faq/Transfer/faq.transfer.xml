@@ -9,6 +9,7 @@
         <property name="answer" type="string"/>
         <property name="enabled" type="bool"/>
         <property name="translations" type="LocalizedFaq[]"/>
+        <property name="voteCount" type="int"/>
     </transfer>
 
     <transfer name="FaqLocalized">

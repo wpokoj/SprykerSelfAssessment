@@ -4,6 +4,8 @@ namespace Pyz\Client\FaqsRestApi\Zed;
 
 use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
+use Generated\Shared\Transfer\FaqVoteCollectionTransfer;
+use Generated\Shared\Transfer\FaqVoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class FaqsRestApiZedStub implements FaqsRestApiZedStubInterface {
@@ -82,5 +84,52 @@ class FaqsRestApiZedStub implements FaqsRestApiZedStubInterface {
 
     public function updateFaqEntity(FaqTransfer $trans): bool {
         return $this->boolRequest($trans, '/faq/gateway/update-faq-entity');
+    }
+
+
+
+    public function getUserVotesCollection(FaqVoteCollectionTransfer $coll): FaqVoteCollectionTransfer {
+        try {
+            /** @var \Generated\Shared\Transfer\FaqVoteCollectionTransfer $coll */
+            $coll = $this->zedRequestClient->call(
+                '/faq/gateway/get-faq-vote-collection',
+                $coll
+            );
+        }
+        catch(\Exception $e) { // not found
+            return $coll;
+        }
+
+        return $coll;
+    }
+
+    public function getUserVoteByFaqId(FaqVoteTransfer $trans): FaqVoteTransfer {
+        try {
+            /** @var \Generated\Shared\Transfer\FaqVoteTransfer $trans */
+            $trans = $this->zedRequestClient->call(
+                '/faq/gateway/get-faq-vote-by-id',
+                $trans
+            );
+        }
+        catch(\Exception $e) { // not found
+            return $trans;
+        }
+
+        return $trans;
+    }
+
+    public function setUserVote(FaqVoteTransfer $trans): FaqVoteTransfer {
+        try {
+            /** @var \Generated\Shared\Transfer\FaqVoteTransfer $trans */
+            $trans = $this->zedRequestClient->call(
+                '/faq/gateway/set-faq-vote',
+                $trans
+            );
+        }
+        catch(\Exception $e) { // not found
+            return $trans;
+        }
+
+        return $trans;
     }
 }
