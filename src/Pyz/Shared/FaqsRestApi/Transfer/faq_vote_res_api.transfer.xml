@@ -5,12 +5,23 @@
 
     <transfer name="RestFaqVotesRequestAttributes">
         <property name="idFaq" type="int"/>
-        <property name="upVoted" type="bool"/>
+        <property name="voted" type="bool"/>
     </transfer>
+
+    <transfer name="RestFaqVotesResponseAttributes">
+        <property name="voted" type="bool"/>
+    </transfer>
+
+    <transfer name="FaqVote">
+        <property name="idCustomer" type="int" />
+        <property name="idFaq" type="int"/>
+        <property name="voted" type="bool"/>
+    </transfer>
+
 
     <transfer name="FaqVoteCollection">
         <property name="customerId" type="int" />
-        <property name="faqs" type="RestFaqVotesRequestAttributes[]" singular="faq"/>
+        <property name="faqs" type="FaqVoteTransfer[]" singular="faq"/>
     </transfer>
 
 </transfers>

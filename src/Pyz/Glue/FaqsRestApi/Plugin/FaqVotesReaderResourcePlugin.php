@@ -4,12 +4,13 @@ namespace Pyz\Glue\FaqsRestApi\Plugin;
 
 use Generated\Shared\Transfer\RestFaqsResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestFaqVotesRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestFaqVotesResponseAttributesTransfer;
 use Pyz\Glue\FaqsRestApi\FaqsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class FaqVotesResourcePlugin
+class FaqVotesReaderResourcePlugin
     extends AbstractPlugin
     implements ResourceRoutePluginInterface {
 
@@ -22,13 +23,13 @@ class FaqVotesResourcePlugin
             return $resourceRouteCollection;
         }
 
-        $resourceRouteCollection->addPost('post', true);
+        $resourceRouteCollection->addGet('get', true);
 
         return $resourceRouteCollection;
     }
 
     public function getResourceType(): string {
-        return FaqsRestApiConfig::RESOURCE_FAQ_VOTES;
+        return FaqsRestApiConfig::RESOURCE_READ_FAQ_VOTES;
     }
 
     public function getController(): string {
@@ -36,6 +37,6 @@ class FaqVotesResourcePlugin
     }
 
     public function getResourceAttributesClassName(): string {
-        return RestFaqVotesRequestAttributesTransfer::class;
+        return RestFaqVotesResponseAttributesTransfer::class;
     }
 }
