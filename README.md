@@ -1,258 +1,182 @@
-# Spryker B2C Self Assessment
+# Spryker FAQ module documentation
 
-Docs:[HackMD](https://hackmd.io/WU__NhTWQWuAguQupRxfUQ?both)
+## Overwiev
 
-curl http://glue.de.spryker.local/access-tokens -X POST -d "{\"data\": {\"type\": \"access-tokens\", \"attributes\": { \"username\": \"spencor.hopkin@spryker.com\", \"password\": \"change123\" } } }"
+This module provides easy to add and use Spryker FAQ utility.
+It allows end users to view and manage frequently asked questions as well as
+vote for the FAQs which users find helpfull.
 
-## Additional packages
+The FAQ module provides:
+- Zed Backoffice Panel to manage FAQ entries
+- Yves frontend panel for all users and voting functionality for logged-in customers
+- Glue API interface for external integration
+- Data loaders for quick and easy initialization
 
-composer require friendsofsymfony/ckeditor-bundle
-
-## Requirements
-
-US 1
-As a Zed User I want to have dedicated UI to manage FAQs.
-
-Acceptance Criteria:
-[Done] Module allows a User to create, remove, update and delete entities (CRUD)
-[Done] Module is available via left navigation
-[Done] FAQ are stored in database
-[Done] FAQ entity can be deactivated
-
-Challenge 1: Answer part is editable via WysiWyg.
-[Work in progress] Challenge 2: FAQ is localized
-
-US 2
-As a machine user I want to connect to the eCommerce to expose FAQ data to external applications.
-
-Acceptance Criteria:
-[Done] Module exposes REST API endpoints to fetch list of entities, and entity by identifier
-[Done] Module exposes REST API endpoints to create and remove, update, delete entities by identifier (CRUD)
-[Done] CRUD endpoints are available for logged in users
-[Done] Errors are properly handled
+## Zed
 
 
-[(not really) Done] Challenge 1: Each endpoint is available only if enabled in config file, if not 404 is returned.
-Challenge 2: FAQ data are localized when they’re returned.
+### Agent guide
 
-US 3
-As a customer I want to easily navigate to FAQ page so that I don’t have to call support in case of problems.
+The main panel is available in the backoffice at url: [/faq/list](http://backoffice.de.spryker.local/faq/list).
+You can also get there through sidebar by navigating to "FAQ" section.
 
-Acceptance Criteria:
-[Done] A FAQ page is available via Yves with list of active FAQ entities
-[Done] Errors are properly handled
+Panel allows to perform all necesary operaions on all registered in database FAQ entries.
+**Create new faq** button navigates to form which allow to create new faq entry.
+Upon registration new FAQ entry can be found in the table in the main panel, which allows to edit, disable, enable and delete entries. Localization is not supported for now.
 
-[More or less done] Challenge: Pagination is provided
 
-US 4
-As a customer I want to mark FAQ entity whether it is helpful or not to let others know if an answer helps.
+### Data structures
 
-Acceptance Criteria:
-[Done] Voting results are visible for guests and logged in users
-[Done] Voting is available for logged in users only via Yves
-[Done] Errors are properly handled
+To communicate with Facade module provides transfer objects listed below:
 
-Challenge: A customer can add only one vote. After revoking a vote, he can vote again.
+:::info
+Mind that all transfer objects have "Transfer" suffix.
+:::
+![](https://i.imgur.com/HuEwt1C.png)
 
-US 5
-As a machine user I want to mark FAQ entity whether it is helpful or not to integrate external applications.
+- **FaqCollectionTransfer**
+  Transfer object enabling data collecting
+- **FaqVoteTransfer**
+  Single vote entry
+- **PaginationTransfer**
+  Object providing pagiantion settings
+- **FaqVoteCollectionTransger**
+  Collection of all votes
+- **FaqVoteTransfer**
+  Single faq entry
 
-Acceptance Criteria:
-[Done] Voting results are visible for guests and logged in users
-[Done] Voting endpoints are available for logged in users only
-[Done] Errors are properly handled
+### Facade
 
-Challenge: A customer can add only one vote. After revoking a vote, he can vote again.
+Business layer facade provides convenient interface to manage FAQ:
 
-US 6
-As a system owner I want to be able to batch import FAQ data to pre-populate database.
 
-Acceptance Criteria:
-[Done] Import file with dummy data is created
-[Done] Import triggering is available via CLI
-
-Challenge: FAQ data are localized
-
-[![Build Status](https://github.com/spryker-shop/b2c-demo-shop/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2c-demo-shop/actions?query=branch:master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2c-demo-shop/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2c-demo-shop/?branch=master)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
-
-## Description
-
-Spryker B2C Demo Shop is a collection of Spryker B2C-specific features. It suits most projects as a starting point of development and can be used to explore Spryker.
-
-## B2C Demo Shop quick start
-
-This section describes how to get started with the B2C Demo Shop quickly.
-
-For detailed installation instructions, see [Installing Spryker with Docker](https://docs.spryker.com/docs/installing-spryker-with-docker) or [Installing with Development Virtual Machine](https://docs.spryker.com/docs/dev-getting-started#installing-spryker-with-development-virtual-machine).
-
-### Prerequisites
-
-For full installation prerequisites, see one of the following:
-* [Installing Docker prerequisites on MacOS](https://docs.spryker.com/docs/installing-docker-prerequisites-on-macos)
-* [Installing Docker prerequisites on Linux](https://docs.spryker.com/docs/installing-docker-prerequisites-on-linux)
-* [Installing Docker prerequisites on Windows](https://docs.spryker.com/docs/installing-docker-prerequisites-on-windows)
-
-Recommended system requirements for MacOS:
-
-|Macbook type	|vCPU	|RAM|
-|---|---|---|
-|15'|	4	|6GB|
-|13'|	2	|4GB|
-
-### Installing the B2C Demo Shop
-
-To install the B2C Demo Shop:
-
-1. Create a project folder and clone the B2C Demo Shop and the Docker SDK:
-```bash
-mkdir spryker-b2c && cd spryker-b2c
-git clone https://github.com/spryker-shop/b2c-demo-shop.git ./
-git clone git@github.com:spryker/docker-sdk.git docker
+```cpp=
+public function createFaqEntity(FaqTransfer $trans): FaqTransfer;
 ```
+Creates FAQ entity from provided FAQ entity. Answer, Question and Enabled field are required.
 
-2. Set up a desired environment:
-  * [Setting up a development environment](#setting-up-a-development-environment)
-  * [Setting up a production-like environment](#setting-up-a-production-like-environment)
 
-#### Setting up a development environment
 
-To set up a development environment:
-
-1. Bootstrap the docker setup:
-
-```bash
-docker/sdk boot deploy.dev.yml
+```cpp=
+public function updateFaqEntity(FaqTransfer $trans): FaqTransfer;
 ```
+Updates FAQ entity. On top of create method requirements, IdFaq must be provided.
 
-2. If the command you've run in the previous step returned instructions, follow them.
-
-3. Build and start the instance:
-```bash
-docker/sdk up
+```cpp=
+public function deleteFaqEntity(FaqTransfer $trans): void;
 ```
+Deletes entry by IdFaq
 
-4. Switch to your branch, re-build the application with assets and demo data from the new branch:
-
-```bash
-git checkout {your_branch}
-docker/sdk boot -s deploy.dev.yml
-docker/sdk up --build --assets --data
+```cpp=
+public function findFaqEntityById(int $id): ?FaqTransfer;
 ```
-
-> Depending on your requirements, you can select any combination of the following `up` command attributes. To fetch all the changes from the branch you switch to, we recommend running the command with all of them:
-> - `--build` - update composer, generate transfer objects, etc.
-> - `--assets` - build assets
-> - `--data` - get new demo data
-
-You've set up your Spryker B2C Demo Shop and can access your applications.
+Finds Faq Entry by idFaq. If not found null is returned.
 
 
-### Setting up a production-like environment
-
-To set up a production-like environment:
-
-1. Bootstrap the docker setup:
-
-```bash
-docker/sdk boot -s
+```cpp=
+public function getFaqEntity(FaqTransfer $trans): ?FaqTransfer;
 ```
+Same as previous function.
 
-2. If the command you've run in the previous step returned instructions, follow them.
 
-3. Build and start the instance:
-```bash
-docker/sdk up
+```cpp=
+public function getFaqVoteById(FaqVoteTransfer $trans): FaqVoteTransfer;
 ```
+Checks if user indetified by IdCustomer voted for Faq indetified by IdFaq. Results are stored in the Voted field of the transfer.
 
-4. Switch to your branch in one of the following ways:
-
-  * Switch to your brunch, re-build the application with assets and demo data from the new branch:
-
-  ```bash
-  git checkout {your_branch}
-  docker/sdk boot -s
-  docker/sdk up --assets --data
-  ```
-
-  * Light git checkout:
-
-  ```bash
-  git checkout {your_branch}
-  docker/sdk boot -s
-
-  docker/sdk up
-  ```
-
-  > Depending on your requirements, you can select any combination of the following `up` command attributes. To fetch all the changes from the branch you switch to, we recommend running the command with all of them:
-  > - `--build` - update composer, generate transfer objects, etc.
-  > - `--assets` - build assets
-  > - `--data` - get new demo data
-
-5. Reload all the data:
-
-```bash
-docker/sdk clean-data && docker/sdk up && docker/sdk console q:w:s -v -s
+```cpp=
+public function addFaqVote(FaqVoteTransfer $trans): FaqVoteTransfer;
 ```
+Adds vote for given Faq by Customer.
 
-
-You've set up your Spryker B2C Demo Shop and can access your applications.
-
-## Troubleshooting installation of the B2C Demo Shop
-
-This section describes the most common issues related to the installation of the B2C Demo Shop.
-
-For a complete troubleshooting, see [Troubleshooting Spryker in Docker issues](https://docs.spryker.com/docs/troubleshooting-spryker-in-docker-issues) or [Troubleshooting Spryker in Vagrant installation issues](https://docs.spryker.com/docs/troubleshooting-spryker-in-vagrant-installation-issues).
-
-**when**
-
-You get unexpected application behavior or errors.
-
-**then**
-
-1. Check the state of the directory:
-```bash
-git status
+```cpp=
+public function revokeFaqVote(FaqVoteTransfer $trans): void;
 ```
+Deletes vote
 
-2. If there are untracked files (returned in red), and they are not necessary, remove them.
 
-3. Restart file synchronization and rebuild the codebase:
-```bash
-docker/sdk trouble
-docker/sdk boot -s deploy.dev.yml
-docker/sdk up --build --assets
+```cpp=
+public function getFaqCollection(FaqCollectionTransfer $trans): FaqCollectionTransfer;
 ```
+Returns collection of FAQ entries.
 
-**when**
-You do not see the expected demo data on the Storefront.
+Results can be customized:
+- If Id of customer is provided each FaqEntry will contain information wheather user voted for this entry, otherwise null is provided.
+- If Pagination object is set. Results will be paginated accordingly.
 
-**then**
 
-1. Open the [queue broker](http://queue.spryker.local) and wait until all the queues are empty.
 
-2. If the queues are empty, and the issue persists, reload the demo data:
-```bash
-docker/sdk trouble
-docker/sdk boot -s deploy.dev.yml
-docker/sdk up --build --assets --data
+```cpp=
+public function getFaqVoteCollection(FaqVoteCollectionTransfer $trans): FaqVoteCollectionTransfer;
 ```
+Returns set of FAQs user has voted for.
 
-## Installation of B2C Demo Shop with Docker
+### Gateway endpoints
 
-For detailed installation instructions of Spryker with Docker, see [Installing Spryker with Docker](https://docs.spryker.com/docs/installing-spryker-with-docker).
+Module provides cross-module communication via gateway controller:
+
+- **/faq/gateway/set-faq-vote**
+  (FaqVoteTransfer -> FaqVoteTransfer)
+
+  Deletes user vote if vote if set to false and adds it otherwise
+
+- **/faq/gateway/get-faq-collection**
+  (FaqCollectionTransfer -> FaqCollectionTransfer)
+
+  Populates Transfer with FAQ entries. If pagination and/or idCustomer is provided data will be modified accordingly.
+
+- **/faq/gateway/getFaqEntity**
+  **/faq/gateway/updateFaqEntity**
+  **/faq/gateway/deleteFaqEntity**
+  **/faq/gateway/createFaqEntity**
+  (FaqTransfer -> FaqTransfer)
+
+  CRUD endpoints for Faq management
+  Facade's documentation applies
 
 
-## Installation of B2C Demo Shop with Vagrant
-For detailed installation instructions of Spryker with Vagrant, see [Installing with Development Virtual Machine](https://docs.spryker.com/docs/dev-getting-started#installing-spryker-with-development-virtual-machine).
+- **/faq/gateway/getFaqVoteCollection**
+  (FaqVoteCollectionTransfer -> FaqVoteCollectionTransfer)
+
+- **/faq/gateway/getFaqVoteById**
+  (FaqVoteTransfer -> FaqVoteTransfer)
+
+
+## Glue REST API
+
+Module provides set of endpoints FAQ management:
+
+| URL                  | Method | Bearer Token | Type      | Attributes                     | Description                                                                                                             |
+| -------------------- | ------ | ------------ | --------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| /faq-get/{?id}       | GET    | Optional     | NA        | NA                             | Yields set of faqs or a single entry if id is provided. If bearer token is provided, user votes field will be populated |
+| /faqs                | POST   | Required     | faqs      | question:string, answer:string | Adds Faq entries                                                                                                        |
+| /faqs/id             | PATCH  | Required     | faqs      | question:string, answer:string | Updates Faq entry                                                                                                       |
+| /faqs/id             | DELETE | Required     | faqs      | question:string, answer:string | Deletes Faq entry                                                                                                       |
+| /faq-votes-get/{?id} | GET    | Required     | NA        | NA                             | Gets set of user votes or single entry if id is provided                                                                |
+| /faq-votes           | POST   | Required     | faq-votes | id_faq:int, voted:bool         | Updates user vote. It is unified endpint for creating, updating and deleting user votes                                 |
+
+
+## Yves
+
+Faq view is available at the /faq path. Results are paginated by default.
+Voting is available for logged in customers only.
+
+
+## Dataloader
+
+Module provides data loaders to quickly populate FAQ database
+
+File is available at:
+/data/import/local/common/faq.csv
+
+To load data use command:
+```console data:import:faq```
 
 
 
-## Glue API reference
 
-See Glue API reference at [REST API reference](https://docs.spryker.com/docs/rest-api-reference#/rest-api-reference).
 
-## Contributing to the repository
 
-For contribution guidelines, see [Code contribution guide](https://docs.spryker.com/docs/code-contribution-guide#code-contribution-guide).
+
+
+
