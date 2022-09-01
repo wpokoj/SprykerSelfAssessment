@@ -23,7 +23,7 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
         $data = $this->getFactory()
             ->createFaqQuery()
             ->filterByIdFaq($id)
-            ->filterByEnabled(true)
+            //->filterByEnabled(true)
             ->leftJoinWithPyzFaqVote()
             ->find();
 

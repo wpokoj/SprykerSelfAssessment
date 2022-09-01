@@ -14,6 +14,7 @@
     <transfer name="RestFaqsRequestAttributes">
         <property name="question" type="string"/>
         <property name="answer" type="string"/>
+        <property name="enabled" type="bool"/>
     </transfer>
 
     <transfer name="RestFaqVotesRequestAttributes">

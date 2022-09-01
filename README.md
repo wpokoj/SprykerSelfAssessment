@@ -146,14 +146,14 @@ Module provides cross-module communication via gateway controller:
 
 Module provides set of endpoints FAQ management:
 
-| URL                  | Method | Bearer Token | Type      | Attributes                     | Description                                                                                                             |
-| -------------------- | ------ | ------------ | --------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| /faq-get/{?id}       | GET    | Optional     | NA        | NA                             | Yields set of faqs or a single entry if id is provided. If bearer token is provided, user votes field will be populated |
-| /faqs                | POST   | Required     | faqs      | question:string, answer:string | Adds Faq entries                                                                                                        |
-| /faqs/id             | PATCH  | Required     | faqs      | question:string, answer:string | Updates Faq entry                                                                                                       |
-| /faqs/id             | DELETE | Required     | faqs      | question:string, answer:string | Deletes Faq entry                                                                                                       |
-| /faq-votes-get/{?id} | GET    | Required     | NA        | NA                             | Gets set of user votes or single entry if id is provided                                                                |
-| /faq-votes           | POST   | Required     | faq-votes | id_faq:int, voted:bool         | Updates user vote. It is unified endpint for creating, updating and deleting user votes                                 |
+| URL                  | Method | Bearer Token | Type      | Attributes                                   | Description                                                                                                             |
+| -------------------- | ------ | ------------ |-----------|----------------------------------------------| ----------------------------------------------------------------------------------------------------------------------- |
+| /faq-get/{?id}       | GET    | Optional     | NA        | NA                                           | Yields set of faqs or a single entry if id is provided. If bearer token is provided, user votes field will be populated |
+| /faqs                | POST   | Required     | faqs      | question:string, answer:string, enabled:bool | Adds Faq entries                                                                                                        |
+| /faqs/id             | PATCH  | Required     | faqs      | question:string, answer:string, enabled:bool | Updates Faq entry                                                                                                       |
+| /faqs/id             | DELETE | Required     | NA        | NA                                           | Deletes Faq entry                                                                                                       |
+| /faq-votes-get/{?id} | GET    | Required     | NA        | NA                                           | Gets set of user votes or single entry if id is provided                                                                |
+| /faq-votes           | POST   | Required     | faq-votes | id_faq:int, voted:bool                       | Updates user vote. It is unified endpint for creating, updating and deleting user votes                                 |
 
 
 ## Yves

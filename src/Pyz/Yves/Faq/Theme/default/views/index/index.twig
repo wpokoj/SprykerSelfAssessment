@@ -10,7 +10,7 @@
 } %}
 
 {% block content %}
-    <div style="margin-left:auto; margin-right: auto; width:70%">
+    <div class="content" style="margin-left:auto; margin-right: auto; width:70%"> <!---->
         <h2>Frequently asked questions</h2>
         <br><br>
         {% for question in data.questions %}
@@ -44,6 +44,19 @@
         <br>
         <a href="/faq?items-per-page={{ data.itemsPerPage }}&page={{ data.prevPage }}">Previous Page</a>
         <a href="/faq?items-per-page={{ data.itemsPerPage }}&page={{ data.nextPage }}">Next Page</a>
+
+        { include molecule('pagination') with {
+            parameters: ['param'],
+            currentPage: 1,
+            paginationPath: '/faq',
+            showAlwaysFirstAndLast: true,
+            maxPage: 10,
+            extremePagesLimit: 1,
+            nearbyPagesLimit: 1,
+            anchor: '/faq'
+        } }
+
+        {% include molecule('faq-entry') only %}
 
         <br><br>
 

@@ -1,0 +1,13 @@
+@mixin checkout-page-display-address($name: '.faq-entry') {
+    #{$name} {
+        &__item {
+            font-weight: fw(light);
+            line-height: rem(50);
+            letter-spacing: rem(20);
+        }
+
+        @content;
+    }
+}
+
+@include checkout-page-display-address();

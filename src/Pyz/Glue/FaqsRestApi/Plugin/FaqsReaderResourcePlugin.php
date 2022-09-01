@@ -21,7 +21,7 @@ class FaqsReaderResourcePlugin
             return $resourceRouteCollection;
         }
 
-        $resourceRouteCollection->addGet('get', true);
+        $resourceRouteCollection->addGet('get', false);
         //$resourceRouteCollection->addPost('post', true);
         //$resourceRouteCollection->addDelete('delete', true);
 
