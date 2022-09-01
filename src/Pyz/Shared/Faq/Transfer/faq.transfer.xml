@@ -7,6 +7,8 @@
         <property name="faqs" type="Faq[]" singular="faq"/>
         <property name="idCustomer" type="int"/>
         <property name="pagination" type="Pagination"/>
+
+        <property name="faqError" type="FaqError"/>
     </transfer>
 
     <transfer name="Faq">
@@ -16,23 +18,35 @@
         <property name="enabled" type="bool"/>
         <property name="voteCount" type="int"/>
         <property name="userVoted" type="bool"/>
+
+        <property name="faqError" type="FaqError"/>
     </transfer>
 
     <transfer name="FaqVoteCollection">
         <property name="customerId" type="int" />
         <property name="faqs" type="FaqVote[]" singular="faq"/>
+
+        <property name="faqError" type="FaqError"/>
     </transfer>
 
     <transfer name="FaqVote">
         <property name="idCustomer" type="int" />
         <property name="idFaq" type="int"/>
         <property name="voted" type="bool"/>
+
+        <property name="faqError" type="FaqError"/>
     </transfer>
 
     <transfer name="Pagination">
         <property name="page" type="int"/>
         <property name="limit" type="int"/>
         <property name="maxPage" type="int"/>
+    </transfer>
+
+    <transfer name="FaqError">
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+        <property name="status" type="int" />
     </transfer>
 
 </transfers>

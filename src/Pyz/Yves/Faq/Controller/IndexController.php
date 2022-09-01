@@ -3,8 +3,6 @@
 namespace Pyz\Yves\Faq\Controller;
 
 use Generated\Shared\Transfer\FaqCollectionTransfer;
-use Generated\Shared\Transfer\FaqCustomerTransfer;
-use Generated\Shared\Transfer\FaqDataCollectionTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Pyz\Client\Faq\FaqClientInterface;
 use Pyz\Yves\Faq\FaqFactory;

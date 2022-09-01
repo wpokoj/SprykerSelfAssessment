@@ -57,6 +57,14 @@ class FaqsReader implements FaqsReaderInterface
         $planetCollectionTransfer =
             $this->faqsRestApiClient->getFaqCollection($transfer);
 
+        if($err = $planetCollectionTransfer->getFaqError()) {
+
+            return $restResponse->addError(
+                (new RestErrorMessageTransfer())
+                    ->fromArray($err->toArray())
+            );
+        }
+
 
         foreach ($planetCollectionTransfer->getFaqs() as $faqTransfer) {
             $restResource = $this->restResourceBuilder->createRestResource(
@@ -78,6 +86,15 @@ class FaqsReader implements FaqsReaderInterface
             $this->faqsRestApiClient->getFaqEntity(
                 (new FaqTransfer())->setIdFaq($id)
             );
+
+
+        if($err = $res->getFaqError()) {
+
+            return $restResponse->addError(
+                (new RestErrorMessageTransfer())
+                    ->fromArray($err->toArray())
+            );
+        }
 
         if($res === null) {
             $restResponse->addError((new RestErrorMessageTransfer())

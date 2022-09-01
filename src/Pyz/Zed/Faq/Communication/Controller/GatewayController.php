@@ -5,16 +5,19 @@ namespace Pyz\Zed\Faq\Communication\Controller;
 use Generated\Shared\Transfer\FaqCollectionTransfer;
 use Generated\Shared\Transfer\FaqCustomerTransfer;
 use Generated\Shared\Transfer\FaqDataCollectionTransfer;
+use Generated\Shared\Transfer\FaqErrorTransfer;
 use Generated\Shared\Transfer\FaqTransfer;
 use Generated\Shared\Transfer\FaqVoteCollectionTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
 use Generated\Shared\Transfer\FaqVoteTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Pyz\Zed\Faq\Business\FaqFacade;
+use Pyz\Zed\Faq\Communication\FaqCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method FaqFacade getFacade()
+ * @method FaqCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController {
 
@@ -38,11 +41,25 @@ class GatewayController extends AbstractGatewayController {
 
     public function getFaqCollectionAction(FaqCollectionTransfer $trans): FaqCollectionTransfer {
 
+        if($res = $this->getFactory()->createPaginationValidator()->validate($trans->getPagination())) {
+
+            return $trans->setFaqError($res);
+        }
+
         return $this->getFacade()
             ->getFaqCollection($trans);
     }
 
     public function getFaqEntityAction(FaqTransfer $trans): ?FaqTransfer {
+
+        if(!($this->getFacade()->findFaqEntityById($trans->getIdFaq()))) {
+            return $trans->setFaqError(
+                (new FaqErrorTransfer())
+                    ->setStatus(404)
+                    ->setCode('001')
+                    ->setDetail('Resource not found')
+            );
+        }
 
         return $this->getFacade()
             ->getFaqEntity($trans);

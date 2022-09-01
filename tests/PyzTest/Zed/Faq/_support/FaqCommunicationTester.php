@@ -1,6 +1,9 @@
 <?php
 namespace PyzTest\Zed\Faq;
 
+use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator;
+use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidatorInterface;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -16,11 +19,15 @@ namespace PyzTest\Zed\Faq;
  *
  * @SuppressWarnings(PHPMD)
 */
-class FaqBusinessTester extends \Codeception\Actor
+class FaqCommunicationTester extends \Codeception\Actor
 {
-    use _generated\FaqBusinessTesterActions;
+    use _generated\FaqCommunicationTesterActions;
 
     /**
      * Define custom actions here
      */
+
+    public function getPaginationTransferValidator(): PaginationTransferValidatorInterface {
+        return new PaginationTransferValidator();
+    }
 }
