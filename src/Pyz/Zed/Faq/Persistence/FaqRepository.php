@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\FaqTransfer;
 use Generated\Shared\Transfer\FaqVoteCollectionTransfer;
 use Generated\Shared\Transfer\FaqVoteRequestTransfer;
 use Generated\Shared\Transfer\FaqVoteTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PyzFaqEntityTransfer;
 use Orm\Zed\Planet\Persistence\PyzFaqVote;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -53,11 +54,10 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
             ->filterByEnabled(true);
 
         if(($page = $trans->getPagination()) !== null) {
-
-            $data = $query->paginate($page->getPage(), $page->getLimit())->getResults();
+            $data = ($query = $query->paginate($page->getPage(), $page->getLimit()))->getResults();
+            $trans->getPagination()->setLastPage($query->getLastPage());
         }
         else {
-
             $data = $query->find();
         }
 
@@ -88,7 +88,6 @@ class FaqRepository extends AbstractRepository implements FaqRepositoryInterface
 
             $trans->addFaq($nFaq);
         }
-
 
         return $trans;
     }

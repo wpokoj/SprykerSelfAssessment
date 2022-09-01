@@ -32,6 +32,8 @@ class IndexController extends AbstractController {
                 ->setLimit($limit)
                 ->setPage($page));
 
+
+
         if($customerValidator->isCustomerLogged()) {
             $req->setIdCustomer($customerValidator->getLoggedCustomerId());
         }
@@ -49,8 +51,7 @@ class IndexController extends AbstractController {
                 'questions' => $questions,
                 'itemsPerPage' => $limit,
                 'page' => $page,
-                'nextPage' => $page + 1,
-                'prevPage' => $page > 1 ? $page - 1 : 1,
+                'lastPage' => $data->getPagination()->getLastPage(),
             ],
             [],
             '@Faq/views/index/index.twig'

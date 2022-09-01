@@ -4,15 +4,24 @@
     logged: _view.logged,
     questions: _view.questions,
     itemsPerPage: _view.itemsPerPage,
-    page: _view.page,
-    prevPage: _view.prevPage,
-    nextPage: _view.nextPage
+    paginationData: {
+        parameters: {},
+        currentPage: _view.page,
+        paginationPath: '/faq',
+        maxPage: _view.lastPage,
+        showAlwaysFirstAndLast: true,
+        anchor: '',
+    }
 } %}
 
 {% block content %}
     <div class="content" style="margin-left:auto; margin-right: auto; width:70%"> <!---->
         <h2>Frequently asked questions</h2>
         <br><br>
+        {% include molecule('pagination') with {
+            data: data.paginationData
+        } %}
+        <br>
         {% for question in data.questions %}
             <div>
                 Q: {{ question.question }} <br>
@@ -39,24 +48,19 @@
             </div>
             <br><br>
         {% endfor %}
-
+        {#
         Current page: {{ data.page  }}
         <br>
         <a href="/faq?items-per-page={{ data.itemsPerPage }}&page={{ data.prevPage }}">Previous Page</a>
-        <a href="/faq?items-per-page={{ data.itemsPerPage }}&page={{ data.nextPage }}">Next Page</a>
+            <a href="/faq?items-per-page={{ data.itemsPerPage }}&page={{ data.nextPage }}">Next Page</a> #}
 
-        { include molecule('pagination') with {
-            parameters: ['param'],
-            currentPage: 1,
-            paginationPath: '/faq',
-            showAlwaysFirstAndLast: true,
-            maxPage: 10,
-            extremePagesLimit: 1,
-            nearbyPagesLimit: 1,
-            anchor: '/faq'
-        } }
+        {# path('/faq', {param: 'param'} | merge( {any: 'any'} )) #}
 
-        {% include molecule('faq-entry') only %}
+        {% include molecule('pagination') with {
+            data: data.paginationData
+        } %}
+
+        {# include molecule('faq-entry') only #}
 
         <br><br>
 
