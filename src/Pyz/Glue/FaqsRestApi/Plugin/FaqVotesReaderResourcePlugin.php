@@ -10,6 +10,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollect
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
+/**
+ * @method FaqsRestApiConfig getConfig()
+ */
 class FaqVotesReaderResourcePlugin
     extends AbstractPlugin
     implements ResourceRoutePluginInterface {
@@ -17,13 +20,11 @@ class FaqVotesReaderResourcePlugin
 
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection
     ): ResourceRouteCollectionInterface {
-        $enabled = ($this->getConfig())::ENABLED;
+        $enabled = $this->getConfig()->isEndpointEnabled(FaqsRestApiConfig::RESOURCE_FAQ_VOTES);
 
-        if (!$enabled) {
-            return $resourceRouteCollection;
+        if ($enabled) {
+            $resourceRouteCollection->addGet('get', true);
         }
-
-        $resourceRouteCollection->addGet('get', true);
 
         return $resourceRouteCollection;
     }

@@ -21,17 +21,13 @@ class FaqsResourceRoutePlugin
 
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $enabled = ($this->getConfig())::ENABLED;
+        $enabled = $this->getConfig()->isEndpointEnabled(FaqsRestApiConfig::RESOURCE_FAQS);
 
-        if(!$enabled) {
-            return $resourceRouteCollection;
+        if($enabled) {
+            $resourceRouteCollection->addPost('post', true);
+            $resourceRouteCollection->addPatch('patch', true);
+            $resourceRouteCollection->addDelete('delete', true);
         }
-
-        //$resourceRouteCollection->addGet('get', true);
-        $resourceRouteCollection->addPost('post', true);
-        //$resourceRouteCollection->addPost('add-vote', false);
-        $resourceRouteCollection->addPatch('patch', true);
-        $resourceRouteCollection->addDelete('delete', true);
 
         return $resourceRouteCollection;
     }
