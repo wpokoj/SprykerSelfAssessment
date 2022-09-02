@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyz\Zed\Faq\Communication\Validator;
+namespace Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator;
 
 use Generated\Shared\Transfer\FaqErrorTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;

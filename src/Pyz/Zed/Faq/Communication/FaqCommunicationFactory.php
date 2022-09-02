@@ -10,8 +10,10 @@ use Orm\Zed\Planet\Persistence\PyzMoonQuery;
 use Orm\Zed\Planet\Persistence\PyzPlanetQuery;
 use Pyz\Zed\Faq\Communication\Form\FaqForm;
 use Pyz\Zed\Faq\Communication\Table\FaqTable;
-use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator;
-use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidatorInterface;
+use Pyz\Zed\Faq\Communication\Validator\IdCustomerValidator\IdCustomerValidator;
+use Pyz\Zed\Faq\Communication\Validator\IdCustomerValidator\IdCustomerValidatorInterface;
+use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator\PaginationTransferValidator;
+use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator\PaginationTransferValidatorInterface;
 use Pyz\Zed\Faq\FaqDependencyProvider;
 use Pyz\Zed\Planet\Communication\Form\MoonForm;
 use Pyz\Zed\Planet\Communication\Form\PlanetForm;
@@ -67,5 +69,10 @@ class FaqCommunicationFactory extends AbstractCommunicationFactory {
     public function createPaginationValidator(): PaginationTransferValidatorInterface {
 
         return new PaginationTransferValidator();
+    }
+
+    public function createIdCustomerValidator(): IdCustomerValidatorInterface {
+
+        return new IdCustomerValidator();
     }
 }

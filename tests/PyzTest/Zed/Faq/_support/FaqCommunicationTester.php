@@ -1,8 +1,8 @@
 <?php
 namespace PyzTest\Zed\Faq;
 
-use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator;
-use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidatorInterface;
+use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator\PaginationTransferValidator;
+use Pyz\Zed\Faq\Communication\Validator\PaginationTransferValidator\PaginationTransferValidatorInterface;
 
 /**
  * Inherited Methods

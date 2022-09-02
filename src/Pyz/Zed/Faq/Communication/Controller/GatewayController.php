@@ -41,13 +41,15 @@ class GatewayController extends AbstractGatewayController {
 
     public function getFaqCollectionAction(FaqCollectionTransfer $trans): FaqCollectionTransfer {
 
-        if($res = $this->getFactory()->createPaginationValidator()->validate($trans->getPagination())) {
+        $res = $this->getFactory()->createPaginationValidator()->validate($trans->getPagination())
+            ?? $this->getFactory()->createIdCustomerValidator()->validateIdCustomer($trans->getIdCustomer())
+            ?? $this->getFacade()->getFaqCollection($trans);
 
+        if($res instanceof FaqErrorTransfer) {
             return $trans->setFaqError($res);
         }
 
-        return $this->getFacade()
-            ->getFaqCollection($trans);
+        return $trans;
     }
 
     public function getFaqEntityAction(FaqTransfer $trans): ?FaqTransfer {
