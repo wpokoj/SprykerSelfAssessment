@@ -7,6 +7,7 @@
 
 namespace Pyz\Client\RabbitMq;
 
+use Pyz\Shared\FaqSearch\FaqSearchConstants;
 use Spryker\Client\RabbitMq\RabbitMqConfig as SprykerRabbitMqConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
@@ -123,6 +124,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             TaxStorageConfig::TAX_SET_SYNC_STORAGE_QUEUE,
             SalesReturnSearchConfig::SYNC_SEARCH_RETURN,
             AssetStorageConfig::ASSET_SYNC_STORAGE_QUEUE,
+            FaqSearchConstants::FAQ_SYNC_SEARCH_QUEUE,
         ];
     }
 

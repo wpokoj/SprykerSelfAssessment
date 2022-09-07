@@ -6,5 +6,5 @@ use Generated\Shared\Transfer\FaqErrorTransfer;
 
 interface IdCustomerValidatorInterface {
 
-    public function validateIdCustomer(int $id): ?FaqErrorTransfer;
+    public function validateIdCustomer(?int $id): ?FaqErrorTransfer;
 }

@@ -6,9 +6,9 @@ use Generated\Shared\Transfer\FaqErrorTransfer;
 
 class IdCustomerValidator implements IdCustomerValidatorInterface {
 
-    public function validateIdCustomer(int $id): ?FaqErrorTransfer {
+    public function validateIdCustomer(?int $id): ?FaqErrorTransfer {
 
-        return ($id > 0)
+        return ($id > 0 || $id === null)
             ? null
             : (new FaqErrorTransfer())
                 ->setCode('003')

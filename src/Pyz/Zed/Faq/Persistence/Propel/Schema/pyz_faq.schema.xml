@@ -8,6 +8,10 @@
         <column name="question" required="true" type="VARCHAR" size="1023"/>
         <column name="answer" type="VARCHAR" size="16383"/>
         <column name="enabled" type="BOOLEAN" size="255" />
+
+        <behavior name="event">
+            <parameter name="pyz_faq_all" column="*"/>
+        </behavior>
     </table>
 
     <table name="pyz_faq_localized" phpName="PyzFaqLocalized">
